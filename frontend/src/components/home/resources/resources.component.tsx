@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const resources = [
   {
@@ -15,7 +16,7 @@ const resources = [
     description:
       "Access professional templates for various writing styles and formats.",
     linkText: "Browse templates →",
-    link: "#",
+    link: "/templates",
   },
   {
     icon: "fas fa-users",
@@ -47,12 +48,12 @@ const ResourceComponent = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2 text-gray-400">{resource.title}</h3>
               <p className="text-gray-500 mb-4">{resource.description}</p>
-              <a
-                href={resource.link}
+              <Link
+                to={resource.link}
                 className="text-indigo-500 hover:text-indigo-700 font-medium"
               >
                 {resource.linkText}
-              </a>
+              </Link>
             </div>
           ))}
         </div>
