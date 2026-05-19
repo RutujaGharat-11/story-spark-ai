@@ -29,11 +29,13 @@ import EmailValidationComponent from "./components/email_validation/email.valida
 import { USER_ROLE } from "./constants/role";
 import PostListsComponent from "./components/dashboard/posts/post_lists.component";
 import ProfileComponent from "./components/dashboard/profile/profile.component";
+import Contact from "./components/contactus/contactus";
 import HelpCenterComponent from "./components/help_center/help_center.component";
+
 
 import AboutUsComponent from "./components/footer/about-us.tsx";
 import CareerComponent from "./components/footer/career.tsx";
-import ContactUsComponent from "./components/footer/contact-us.tsx";
+// import ContactUsComponent from "./components/footer/contact-us.tsx";
 import BlogComponent from "./components/footer/blog.tsx";
 // import HelpCenterComponent from "./components/footer/help-center.tsx";
 import GuidelinesComponent from "./components/footer/guidelines.tsx";
@@ -238,6 +240,7 @@ function App() {
           element={<EmailValidationComponent />}
         />
 
+
         <Route
           path="/signup"
           element={
@@ -325,7 +328,7 @@ function App() {
           path="/contact-us"
           element={
             <RootLayout>
-              <ContactUsComponent />
+             <Contact/>
             </RootLayout>
           }
         />

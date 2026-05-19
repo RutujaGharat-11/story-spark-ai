@@ -60,7 +60,8 @@ const NavListComponent: React.FC = () => {
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-gray-400 hover:text-custom transition">HOME</Link>
             <Link to="/explore" className="text-gray-400 hover:text-custom transition">EXPLORE</Link>
-            <Link to="/community" className="text-gray-400 hover:text-custom transition">COMMUNITY</Link>
+            <Link to="/contact-us" className="text-gray-400 hover:text-custom transition">CONTACT US</Link>
+            <Link to="/conmunity" className="text-gray-400 hover:text-custom transition">COMMUNITY</Link>
             {isLogin && (
               <>
                 <Link to="/bookmarks" className="text-gray-400 hover:text-custom transition">SAVED STORIES</Link>
