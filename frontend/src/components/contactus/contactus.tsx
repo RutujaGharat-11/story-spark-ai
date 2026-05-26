@@ -109,10 +109,7 @@ export default function Contact() {
       console.error("Contact Form Error:", err);
 
 
-      setError(
-        err.message ||
-          "✕ Failed to send message. Please check your connection.",
-      );
+
 
       const message =
         err instanceof Error
@@ -230,14 +227,14 @@ export default function Contact() {
           "
           />
 
-        {/* Form Container */}
+          {/* Form Container */}
           <div className="w-full max-w-xl mx-auto group relative">
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-[1.5rem] blur opacity-10 group-hover:opacity-15 transition duration-1000"></div>
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-[1.5rem] blur opacity-10 group-hover:opacity-15 transition duration-1000"></div>
 
 
-          <form
-            onSubmit={submitHandler}
-            className="
+            <form
+              onSubmit={submitHandler}
+              className="
             relative
             rounded-[2rem]
             border
@@ -248,12 +245,12 @@ export default function Contact() {
             sm:p-8
             lg:p-10
           "
-          >
-            <div className="space-y-6">
-              {/* Name */}
-              <div className="relative">
-                <User
-                  className="
+            >
+              <div className="space-y-6">
+                {/* Name */}
+                <div className="relative">
+                  <User
+                    className="
                   absolute
                   left-5
                   top-1/2
@@ -262,16 +259,16 @@ export default function Contact() {
                   -translate-y-1/2
                   text-purple-300
                 "
-                />
+                  />
 
-                <input
-                  type="text"
-                  name="fullname"
-                  placeholder="Your Name"
-                  value={formData.fullname}
-                  onChange={changeHandler}
-                  required
-                  className="
+                  <input
+                    type="text"
+                    name="fullname"
+                    placeholder="Your Name"
+                    value={formData.fullname}
+                    onChange={changeHandler}
+                    required
+                    className="
                   h-16
                   w-full
                   rounded-2xl
@@ -290,13 +287,13 @@ export default function Contact() {
                   focus:ring-2
                   focus:ring-purple-500/30
                 "
-                />
-              </div>
+                  />
+                </div>
 
-              {/* Email */}
-              <div className="relative">
-                <Mail
-                  className="
+                {/* Email */}
+                <div className="relative">
+                  <Mail
+                    className="
                   absolute
                   left-5
                   top-1/2
@@ -305,16 +302,16 @@ export default function Contact() {
                   -translate-y-1/2
                   text-purple-300
                 "
-                />
+                  />
 
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Your Email"
-                  value={formData.email}
-                  onChange={changeHandler}
-                  required
-                  className="
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Your Email"
+                    value={formData.email}
+                    onChange={changeHandler}
+                    required
+                    className="
                   h-16
                   w-full
                   rounded-2xl
@@ -333,13 +330,13 @@ export default function Contact() {
                   focus:ring-2
                   focus:ring-purple-500/30
                 "
-                />
-              </div>
+                  />
+                </div>
 
-              {/* Subject */}
-              <div className="relative">
-                <FileText
-                  className="
+                {/* Subject */}
+                <div className="relative">
+                  <FileText
+                    className="
                   absolute
                   left-5
                   top-1/2
@@ -348,16 +345,16 @@ export default function Contact() {
                   -translate-y-1/2
                   text-purple-300
                 "
-                />
+                  />
 
-                <input
-                  type="text"
-                  name="subject"
-                  placeholder="Subject"
-                  value={formData.subject}
-                  onChange={changeHandler}
-                  required
-                  className="
+                  <input
+                    type="text"
+                    name="subject"
+                    placeholder="Subject"
+                    value={formData.subject}
+                    onChange={changeHandler}
+                    required
+                    className="
                   h-16
                   w-full
                   rounded-2xl
@@ -376,13 +373,13 @@ export default function Contact() {
                   focus:ring-2
                   focus:ring-purple-500/30
                 "
-                />
-              </div>
+                  />
+                </div>
 
-              {/* Message */}
-              <div className="relative">
-                <Pencil
-                  className="
+                {/* Message */}
+                <div className="relative">
+                  <Pencil
+                    className="
                   absolute
                   left-5
                   top-7
@@ -390,16 +387,16 @@ export default function Contact() {
                   w-5
                   text-purple-300
                 "
-                />
+                  />
 
-                <textarea
-                  rows={7}
-                  name="message"
-                  placeholder="Your Message"
-                  value={formData.message}
-                  onChange={changeHandler}
-                  required
-                  className="
+                  <textarea
+                    rows={7}
+                    name="message"
+                    placeholder="Your Message"
+                    value={formData.message}
+                    onChange={changeHandler}
+                    required
+                    className="
                   w-full
                   resize-none
                   rounded-2xl
@@ -419,14 +416,14 @@ export default function Contact() {
                   focus:ring-2
                   focus:ring-purple-500/30
                 "
-                />
-              </div>
+                  />
+                </div>
 
-              {/* Button */}
-              <button
-                type="submit"
-                disabled={loading}
-                className="
+                {/* Button */}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="
                 relative
                 flex
                 h-16
@@ -449,37 +446,37 @@ export default function Contact() {
                 disabled:cursor-not-allowed
                 disabled:opacity-50
               "
-              >
-                {loading ? (
-                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                ) : (
-                <>
-  <Sparkles className="h-5 w-5" />
+                >
+                  {loading ? (
+                    <div className="h-6 w-6 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                  ) : (
+                    <>
+                      <Sparkles className="h-5 w-5" />
+                      <span>Send Message</span>
+                    </>
+                  )}
+                </button>
 
-  <span>Send Message</span>
-</>
+                {/* Success */}
+                {success && (
+                  <div className="rounded-2xl border border-green-500/30 bg-green-500/10 px-4 py-4">
+                    <p className="text-center text-sm font-medium text-green-400 sm:text-base">
+                      ✓ Message sent successfully. I’ll get back to you soon.
+                    </p>
+                  </div>
                 )}
-              </button>
 
-              {/* Success */}
-              {success && (
-                <div className="rounded-2xl border border-green-500/30 bg-green-500/10 px-4 py-4">
-                  <p className="text-center text-sm font-medium text-green-400 sm:text-base">
-                    ✓ Message sent successfully. I’ll get back to you soon.
-                  </p>
-                </div>
-              )}
-
-              {/* Error */}
-              {error && (
-                <div className="rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-4">
-                  <p className="text-center text-sm font-medium text-red-400 sm:text-base">
-                    {error}
-                  </p>
-                </div>
-              )}
-            </div>
-          </form>
+                {/* Error */}
+                {error && (
+                  <div className="rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-4">
+                    <p className="text-center text-sm font-medium text-red-400 sm:text-base">
+                      {error}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </section>
