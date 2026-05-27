@@ -38,6 +38,75 @@ const StoriesViewComponent: React.FC<StoriesComponentProps> = ({
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [createPost] = useCreatePostMutation();
 
+  const [isPlayingAudio, setIsPlayingAudio] = useState<boolean>(false);
+  const [isPausedAudio, setIsPausedAudio] = useState<boolean>(false);
+
+  const handleTextToSpeech = () => {
+    if (!selectedStory?.content) return;
+
+    if (!("speechSynthesis" in window)) {
+      toast.error("Text-to-speech is not supported in this browser.");
+      return;
+    }
+
+    if (isPlayingAudio) {
+      if (isPausedAudio) {
+        window.speechSynthesis.resume();
+        setIsPausedAudio(false);
+        toast.success("Resumed reading story");
+      } else {
+        window.speechSynthesis.pause();
+        setIsPausedAudio(true);
+        toast.success("Paused reading story");
+      }
+    } else {
+      window.speechSynthesis.cancel();
+      const cleanContent = selectedStory.content.replace(/<[^>]*>/g, "");
+      const utterance = new SpeechSynthesisUtterance(cleanContent);
+      
+      utterance.onend = () => {
+        setIsPlayingAudio(false);
+        setIsPausedAudio(false);
+      };
+
+      utterance.onerror = (e) => {
+        console.error("SpeechSynthesis error:", e);
+        setIsPlayingAudio(false);
+        setIsPausedAudio(false);
+      };
+
+      const voices = window.speechSynthesis.getVoices();
+      const englishVoice = voices.find(
+        (v) => v.lang.startsWith("en-") && v.name.includes("Google")
+      ) || voices.find((v) => v.lang.startsWith("en-"));
+      if (englishVoice) {
+        utterance.voice = englishVoice;
+      }
+
+      window.speechSynthesis.speak(utterance);
+      setIsPlayingAudio(true);
+      setIsPausedAudio(false);
+      toast.success("Playing story audio");
+    }
+  };
+
+  const handleStopAudio = () => {
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsPlayingAudio(false);
+    setIsPausedAudio(false);
+    toast.success("Stopped audio playback");
+  };
+
+  useEffect(() => {
+    return () => {
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
   useEffect(() => {
     setSelectTopics(topics.filter((topic) => topic.selected));
   }, [topics]);
@@ -484,6 +553,36 @@ useEffect(() => {
                 >
                   📄 Export PDF
                 </button>
+                <button
+                  type="button"
+                  className={`rounded-lg px-4 py-2 font-semibold cursor-pointer transition-colors flex items-center gap-1.5 ${
+                    isPlayingAudio
+                      ? isPausedAudio
+                        ? "bg-amber-600 hover:bg-amber-500 text-white"
+                        : "bg-green-600 hover:bg-green-500 text-white"
+                      : "bg-teal-700 hover:bg-teal-600 text-slate-200"
+                  }`}
+                  onClick={handleTextToSpeech}
+                >
+                  {isPlayingAudio ? (
+                    isPausedAudio ? (
+                      <>▶ Resume Audio</>
+                    ) : (
+                      <>⏸ Pause Audio</>
+                    )
+                  ) : (
+                    <>🔊 Listen to Audio</>
+                  )}
+                </button>
+                {isPlayingAudio && (
+                  <button
+                    type="button"
+                    className="rounded-lg px-4 py-2 bg-red-700 text-slate-200 font-semibold cursor-pointer hover:bg-red-600 transition-colors"
+                    onClick={handleStopAudio}
+                  >
+                    ⏹ Stop Audio
+                  </button>
+                )}
                 <button
                   type="button"
                   className={`rounded-lg px-5 py-2 font-semibold flex items-center space-x-2 cursor-pointer bg-blue-600 text-white transition-all duration-200 ${
