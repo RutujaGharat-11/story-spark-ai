@@ -29,7 +29,15 @@ import PricingComponent from "./components/pricing/pricing.component";
 import ExploreComponent from "./components/post/post.component";
 import PostDetailsComponent from "./components/post/post.details.component";
 import BookmarksComponent from "./components/post/bookmarks.component";
-import { getUserInfo } from "./services/auth.service";
+import { getUserInfo, isLoggedIn } from "./services/auth.service";
+
+const ProtectedRoute = ({ allowedRoles, element }: ProtectedRouteProps) => {
+  const user = getUserInfo();
+  // Ensure the token is valid and not expired
+  if (!isLoggedIn() || !user) return <Navigate to="/login" replace />;
+  if (!allowedRoles.includes(user.role)) return <Navigate to="/" replace />;
+  return element ?? <Outlet />;
+};
 import NotFoundComponent from "./components/not-found.component";
 import EmailValidationComponent from "./components/email_validation/email.validation.component";
 import { USER_ROLE } from "./constants/role";
@@ -62,7 +70,8 @@ type ProtectedRouteProps = {
 
 const ProtectedRoute = ({ allowedRoles, element }: ProtectedRouteProps) => {
   const user = getUserInfo();
-  if (!user) return <Navigate to="/login" replace />;
+  // Ensure the token is valid and not expired
+  if (!isLoggedIn() || !user) return <Navigate to="/login" replace />;
   if (!allowedRoles.includes(user.role)) return <Navigate to="/" replace />;
   return element ?? <Outlet />;
 };
