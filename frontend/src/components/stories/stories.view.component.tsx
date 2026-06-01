@@ -432,11 +432,8 @@ const StoriesViewComponent: React.FC<StoriesComponentProps> = ({
   };
 
   const handleExportPDF = async () => {
-    if (!selectedStory) {
-      toast.error("No story available to export.");
-      return;
-    }
-
+    if (!selectedStory) { toast.error("No story available to export."); return; }
+    if (!selectedStory.content?.trim()) {toast.error("Story content is empty. Cannot export.");return;}
     const toastId = toast.loading("Preparing your premium PDF...");
 
     try {
@@ -659,50 +656,37 @@ const StoriesViewComponent: React.FC<StoriesComponentProps> = ({
   };
 
   const handleExportMarkdown = () => {
-    if (!selectedStory) {
-      toast.error("No story available to export.");
-      return;
-    }
-
+    if (!selectedStory) { toast.error("No story available to export."); return; }
+    if (!selectedStory.content?.trim()) {toast.error("Story content is empty. Cannot export.");return;}
     try {
       const title = selectedStory.title || "Story";
       const content = selectedStory.content || "";
       const tag = selectedStory.tag || "General";
       const authorName = isLogin && profile?.name ? profile.name : "Anonymous";
       const isoDate = new Date().toISOString().split("T")[0];
-
-      const cleanTitle = title.replace(/"/g, '\\"');
-      const cleanTag = tag.replace(/"/g, '\\"');
-      const cleanAuthor = authorName.replace(/"/g, '\\"');
-
-      const markdownContent = `---
-title: "${cleanTitle}"
-tag: "${cleanTag}"
-author: "${cleanAuthor}"
-date: "${isoDate}"
----
-
-# ${title}
-
-${content}
-`;
-
+      const markdownContent = `---\ntitle: "${title.replace(/"/g, '\\"')}"\ntag: "${tag.replace(/"/g, '\\"')}"\nauthor: "${authorName.replace(/"/g, '\\"')}"\ndate: "${isoDate}"\n---\n\n# ${title}\n\n${content}\n`;
       const blob = new Blob([markdownContent], { type: "text/markdown;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      
-      const fileName = title.toLowerCase().replace(/[^a-z0-9]+/g, "-") || "story";
-      link.setAttribute("download", `${fileName}.md`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-      
+      downloadBlob(blob, getSafeFileName(title, "md"));
       toast.success("Markdown downloaded!");
+    } catch (error) { console.error(error); toast.error("Failed to export Markdown."); }
+  };
+
+  const handleExportDOCX = () => {
+    if (!selectedStory) { toast.error("No story available to export."); return; }
+    if (!selectedStory.content?.trim()) {toast.error("Story content is empty. Cannot export.");return;}
+    try {
+      const title = selectedStory.title || "Untitled Story";
+      const docxBlob = createDocxBlob({
+        title,
+        content: selectedStory.content || "",
+        tag: selectedStory.tag || "Story",
+        author: isLogin && profile?.name ? profile.name : "Anonymous",
+      });
+      downloadBlob(docxBlob, getSafeFileName(title, "docx"));
+      toast.success("DOCX downloaded!");
     } catch (error) {
       console.error(error);
-      toast.error("Failed to export Markdown.");
+      toast.error("Failed to export DOCX.");
     }
   };
   const handelPublishStory = async () => {
