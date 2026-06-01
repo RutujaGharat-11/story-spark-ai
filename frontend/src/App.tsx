@@ -1,4 +1,5 @@
 import React from "react";
+
 import { createBrowserRouter, Navigate, Outlet, RouterProvider } from "react-router-dom";
 
 import { USER_ROLE } from "./constants/role";
@@ -15,6 +16,9 @@ import BranchingStory from "./components/stories/BranchingStory";
 import CareerComponent from "./components/footer/career.tsx";
 import CollabHome from "./components/collab/CollabHome";
 import CollabRoom from "./components/collab/CollabRoom";
+import StoriesComponent from "./components/stories/stories.component";
+import PublishedStoriesComponent from "./components/dashboard/posts/published_stories.component";
+import ScrollToTopButton from "./components/ScrollToTopButton";
 import CommunityComponent from "./components/community/community.component";
 import Contact from "./components/contactus/contactus";
 import ContributorsComponent from "./components/footer/contributors";
