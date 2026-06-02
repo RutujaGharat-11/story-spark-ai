@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import StoriesViewComponent, { IStories } from "./stories.view.component";
 import RecentPromptsPanel from "./RecentPromptsPanel";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -1021,11 +1021,11 @@ const StoriesComponent = () => {
                     <div className="flex items-center justify-between mt-1 px-1">
                       {isOverLimit ? (
                         <p className="text-xs text-red-400 flex items-center gap-1">
-                          <span>as</span> {text.characterLimit}
+                          <span>⚠️</span> {text.characterLimit}
                         </p>
                       ) : isNearLimit ? (
                         <p className="text-xs text-yellow-400 flex items-center gap-1">
-                          <span>as</span>{" "}
+                          <span>⚠️</span>{" "}
                           {MAX_PROMPT_LENGTH - textareaValue.length} {text.charactersRemaining}
                         </p>
                       ) : (

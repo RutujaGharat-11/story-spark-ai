@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { getShortenedText, ITopicData, topicsData, getWordCount, SELECTED_TOPIC_CLASSES } from "./stories.utils";
 import toast from "react-hot-toast";
 import { useCreatePostMutation, useDeletePostMutation } from "../../redux/apis/post.api";
@@ -1087,7 +1087,8 @@ const [, setShowRemix] = useState<boolean>(false);
 };
 
 const getSafeFileName = (title: string, ext: string) => {
-  return `${title.replace(/[^a-z0-9]/gi, "_").toLowerCase()}.${ext}`;
+  const cleanTitle = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  return `${cleanTitle || "story"}.${ext}`;
 };
 
 const handleExportMarkdown = () => {
@@ -1303,7 +1304,7 @@ if (isLoading) {
                   onClick={handleExportMarkdown}
                   disabled={!selectedStory}
                 >
-                  ⬇️ Export Markdown
+                  ⬇️ Export as Markdown
                 </button>
                 <button 
                   type="button" 
